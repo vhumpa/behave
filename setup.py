@@ -27,6 +27,7 @@ setup(
     entry_points={
         'console_scripts': ['behave = behave.__main__:main'],
     },
+    data_files=[('behave/formatter/', ['behave/formatter/report.css'])],
     install_requires=requirements,
     use_2to3=True,
     license="BSD",

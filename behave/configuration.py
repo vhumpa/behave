@@ -4,6 +4,7 @@ import os
 import re
 import sys
 import argparse
+import codecs
 import ConfigParser
 
 from behave.reporter.junit import JUnitReporter
