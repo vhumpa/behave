@@ -150,14 +150,19 @@ class HTMLFormatter(Formatter):
         keyword.text = result.keyword + u' '
 
         step_text = ET.SubElement(step_name, 'span', {'class': 'step val'})
+        step_text.text = result.name
         if self.arguments:
+            text_start = 0
             for argument in self.arguments:
-                step_text.text = result.name.split(str(argument.value))[0]
+                if text_start == 0:
+                    step_text.text = result.name[:argument.start]
+                else:
+                    bold.tail = result.name[text_start:argument.start]
                 bold = ET.SubElement(step_text, 'b')
                 bold.text = str(argument.value)
-                bold.tail = result.name.split(str(argument.value))[1]
-        else:
-            step_text.text = result.name
+                text_start = argument.end
+            # Add remaining tail
+            bold.tail = result.name[self.arguments[-1].end:]
 
         step_file = ET.SubElement(step, 'div', {'class': 'step_file'})
         ET.SubElement(step_file, 'span').text = self.location
