@@ -79,6 +79,9 @@ class HTMLFormatter(Formatter):
         h2 = ET.SubElement(self.current_feature, 'h2')
         feature_element = ET.SubElement(h2, 'span', {'class': 'val'})
         feature_element.text = u'%s: %s' % (feature.keyword, feature.name)
+        if feature.description:
+            description_element = ET.SubElement(self.current_feature, 'pre', {'class': 'message'})
+            description_element.text = reduce(lambda d, x: "%s\n%s" % (d, x), feature.description)
 
     def background(self, background):
 
