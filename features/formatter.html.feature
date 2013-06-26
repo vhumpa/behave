@@ -20,6 +20,14 @@ Feature: HTML Formatter
             @step('a step fails')
             def step_fails(context):
                 assert False, "XFAIL-STEP"
+
+            @step('a step with parameter "{param:w}" passes')
+            def step_with_one_param_passes(context, param):
+                pass
+
+            @step('a step with parameter "{param1:w}" and parameter "{param2:w}" passes')
+            def step_with_two_params_passes(context, param1, param2):
+                pass
             """
 
     Scenario: Use HTML formatter on feature without scenarios
@@ -385,6 +393,430 @@ Feature: HTML Formatter
                   <span class="embed"/>
                 </li>
                 <li class="step failed"><div class="step_name"><span class="keyword">When </span><span class="step val">a step fails</span></div><div class="step_file"><span>features/steps/steps.py:7</span></div><span class="embed"/><a class="message" onclick="rslt=document.getElementById('embed_1');rslt.style.display =(rslt.style.display == 'none' ? 'block' : 'none');return false">Error message</a><pre id="embed_1" style="display: none; white-space: pre-wrap;">Assertion Failed: XFAIL-STEP</pre>    </li>
+              </ol>
+            </div>
+            """
+
+    Scenario: Use HTML formatter on feature with three scenarios
+        Given a file named "features/feature_three_scenarios.feature" with:
+            """
+            Feature:
+              Scenario: Simple passing scenario
+                  Given a step passes
+                  When a step passes
+                  Then a step passes
+                  And a step passes
+                  But a step passes
+              Scenario: Simple failing scenario
+                  Given a step passes
+                  When a step passes
+                  Then a step passes
+                  And a step passes
+                  But a step fails
+              Scenario: Simple failing scenario with skipped steps
+                  Given a step passes
+                  When a step passes
+                  Then a step passes
+                  And a step passes
+                  But a step fails
+            """
+        When I run "behave -f html features/feature_three_scenarios.feature"
+        Then it should fail with:
+            """
+            0 features passed, 1 failed, 0 skipped
+            1 scenario passed, 2 failed, 0 skipped
+            """
+        And the command output should contain:
+            """
+            <div class="scenario">
+              <span class="scenario_file">features/feature_three_scenarios.feature:2</span>
+              <h3 onclick="ol=document.getElementById('scenario_0');ol.style.display =(ol.style.display == 'none' ? 'block' : 'none');return false">
+                <span class="val">Scenario: Simple passing scenario</span>
+              </h3>
+              <ol class="scenario_steps" id="scenario_0">
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">Given </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">When </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">Then </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">And </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">But </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+              </ol>
+            </div>
+            <div class="scenario">
+              <span class="scenario_file">features/feature_three_scenarios.feature:8</span>
+              <h3 onclick="ol=document.getElementById('scenario_1');ol.style.display =(ol.style.display == 'none' ? 'block' : 'none');return false" style="background: #C40D0D; color: #FFFFFF">
+                <span class="val">Scenario: Simple failing scenario</span>
+              </h3>
+              <ol class="scenario_steps" id="scenario_1">
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">Given </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">When </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">Then </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">And </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step failed"><div class="step_name"><span class="keyword">But </span><span class="step val">a step fails</span></div><div class="step_file"><span>features/steps/steps.py:7</span></div><span class="embed"/><a class="message" onclick="rslt=document.getElementById('embed_1');rslt.style.display =(rslt.style.display == 'none' ? 'block' : 'none');return false">Error message</a><pre id="embed_1" style="display: none; white-space: pre-wrap;">Assertion Failed: XFAIL-STEP</pre>    </li>
+              </ol>
+            </div>
+            <div class="scenario">
+              <span class="scenario_file">features/feature_three_scenarios.feature:14</span>
+              <h3 onclick="ol=document.getElementById('scenario_2');ol.style.display =(ol.style.display == 'none' ? 'block' : 'none');return false" style="background: #C40D0D; color: #FFFFFF">
+                <span class="val">Scenario: Simple failing scenario with skipped steps</span>
+              </h3>
+              <ol class="scenario_steps" id="scenario_2">
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">Given </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">When </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">Then </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">And </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step failed"><div class="step_name"><span class="keyword">But </span><span class="step val">a step fails</span></div><div class="step_file"><span>features/steps/steps.py:7</span></div><span class="embed"/><a class="message" onclick="rslt=document.getElementById('embed_2');rslt.style.display =(rslt.style.display == 'none' ? 'block' : 'none');return false">Error message</a><pre id="embed_2" style="display: none; white-space: pre-wrap;">Assertion Failed: XFAIL-STEP</pre>    </li>
+              </ol>
+            </div>
+            """
+
+    Scenario: Use HTML formatter on step with one parameter
+        Given a file named "features/feature_step_with_one_parameter.feature" with:
+            """
+            Feature:
+              Scenario: Simple scenario with one parameter in step
+                  Given a step passes
+                  When a step with parameter "foo" passes
+                  Then a step passes
+            """
+        When I run "behave -f html features/feature_step_with_one_parameter.feature"
+        Then it should pass with:
+            """
+            1 feature passed, 0 failed, 0 skipped
+            1 scenario passed, 0 failed, 0 skipped
+            """
+        And the command output should contain:
+            """
+                        <div class="scenario">
+              <span class="scenario_file">features/feature_step_with_one_parameter.feature:2</span>
+              <h3 onclick="ol=document.getElementById('scenario_0');ol.style.display =(ol.style.display == 'none' ? 'block' : 'none');return false">
+                <span class="val">Scenario: Simple scenario with one parameter in step</span>
+              </h3>
+              <ol class="scenario_steps" id="scenario_0">
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">Given </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">When </span>
+                    <span class="step val">a step with parameter "<b>foo</b>" passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:11</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">Then </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+              </ol>
+            </div>
+            """
+
+    Scenario: Use HTML formatter on step with several parameters
+        Given a file named "features/feature_step_with_parameters.feature" with:
+            """
+            Feature:
+              Scenario: Simple scenario with parameters in step
+                  Given a step passes
+                  When a step with parameter "foo" and parameter "bar" passes
+                  Then a step passes
+            """
+        When I run "behave -f html features/feature_step_with_parameters.feature"
+        Then it should pass with:
+            """
+            1 feature passed, 0 failed, 0 skipped
+            1 scenario passed, 0 failed, 0 skipped
+            """
+        And the command output should contain:
+            """
+            <div class="scenario">
+              <span class="scenario_file">features/feature_step_with_parameters.feature:2</span>
+              <h3 onclick="ol=document.getElementById('scenario_0');ol.style.display =(ol.style.display == 'none' ? 'block' : 'none');return false">
+                <span class="val">Scenario: Simple scenario with parameters in step</span>
+              </h3>
+              <ol class="scenario_steps" id="scenario_0">
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">Given </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">When </span>
+                    <span class="step val">a step with parameter "<b>foo</b>" and parameter "<b>bar</b>" passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:15</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">Then </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+              </ol>
+            </div>
+            """
+
+    Scenario: Use HTML formatter on step with multiline
+        Given a file named "features/feature_multiline_step.feature" with:
+            """
+            Feature:
+              Scenario: Simple scenario with multiline string in step
+                  Given a step passes
+                  When a step passes:
+                  '''
+                    Tiger, tiger, burning bright
+                    In the forests of the night,
+                    What immortal hand or eye
+                    Could frame thy fearful symmetry?
+                  '''
+            """
+        When I run "behave -f html features/feature_multiline_step.feature"
+        Then it should pass with:
+            """
+            1 feature passed, 0 failed, 0 skipped
+            1 scenario passed, 0 failed, 0 skipped
+            """
+        And the command output should contain:
+            """
+            <div class="scenario">
+              <span class="scenario_file">features/feature_multiline_step.feature:2</span>
+              <h3 onclick="ol=document.getElementById('scenario_0');ol.style.display =(ol.style.display == 'none' ? 'block' : 'none');return false">
+                <span class="val">Scenario: Simple scenario with multiline string in step</span>
+              </h3>
+              <ol class="scenario_steps" id="scenario_0">
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">Given </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">When </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                  <div class="message">
+                    <pre style="white-space: pre-wrap;">  Tiger, tiger, burning bright
+                    In the forests of the night,
+                    What immortal hand or eye
+                    Could frame thy fearful symmetry?</pre>
+                  </div>
+                </li>
+              </ol>
+            </div>
+            """
+
+    Scenario: Use HTML formatter on step with table
+        Given a file named "features/feature_step_with_table.feature" with:
+            """
+            Feature:
+              Scenario: Simple scenario with failing and skipped steps
+                  Given a step passes
+                  When a step passes:
+                  | Field | Value |
+                  | Foo   | bar   |
+                  | baz   | qux   |
+            """
+        When I run "behave -f html features/feature_step_with_table.feature"
+        Then it should pass with:
+            """
+            1 feature passed, 0 failed, 0 skipped
+            1 scenario passed, 0 failed, 0 skipped
+            """
+        And the command output should contain:
+            """
+            <div class="scenario">
+              <span class="scenario_file">features/feature_step_with_table.feature:2</span>
+              <h3 onclick="ol=document.getElementById('scenario_0');ol.style.display =(ol.style.display == 'none' ? 'block' : 'none');return false">
+                <span class="val">Scenario: Simple scenario with failing and skipped steps</span>
+              </h3>
+              <ol class="scenario_steps" id="scenario_0">
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">Given </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                </li>
+                <li class="step passed">
+                  <div class="step_name">
+                    <span class="keyword">When </span>
+                    <span class="step val">a step passes</span>
+                  </div>
+                  <div class="step_file">
+                    <span>features/steps/steps.py:3</span>
+                  </div>
+                  <span class="embed"/>
+                  <table>
+                    <tr>
+                      <th>Field</th>
+                      <th>Value</th>
+                    </tr>
+                    <tr>
+                      <td>Foo</td>
+                      <td>bar</td>
+                    </tr>
+                    <tr>
+                      <td>baz</td>
+                      <td>qux</td>
+                    </tr>
+                  </table>
+                </li>
               </ol>
             </div>
             """
