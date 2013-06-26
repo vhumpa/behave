@@ -110,6 +110,10 @@ class HTMLFormatter(Formatter):
         span = ET.SubElement(self.scenario_name, 'span', {'class': 'val'})
         span.text = u'%s: %s' % (scenario.keyword, scenario.name)
 
+        if scenario.description:
+            description_element = ET.SubElement(self.scenario_el, 'pre', {'class': 'message'})
+            description_element.text = reduce(lambda d, x: "%s\n%s" % (d, x), scenario.description)
+
         self.steps = ET.SubElement(self.scenario_el, 'ol',
             {'class': 'scenario_steps',
              'id': 'scenario_%s' % self.scenario_id})
