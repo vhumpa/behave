@@ -131,7 +131,10 @@ class HTMLFormatter(Formatter):
 
     def match(self, match):
         self.arguments = match.arguments
-        self.location = "%s:%s" % (match.location.filename, match.location.line)
+        if match.location:
+            self.location = "%s:%s" % (match.location.filename, match.location.line)
+        else:
+            self.location = "<unknown>"
 
     def step(self, step):
         self.arguments = None
