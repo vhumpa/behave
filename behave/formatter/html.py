@@ -1,5 +1,5 @@
 from behave.formatter.base import Formatter
-from xml.etree import cElementTree as ET
+import lxml.etree as ET
 import base64
 import os.path
 
@@ -284,4 +284,4 @@ class HTMLFormatter(Formatter):
 
         # Sending the report to stream
         if len(self.all_features) > 0:
-            self.stream.write(ET.tostring(self.html))
+            self.stream.write(ET.tostring(self.html, pretty_print = True))
