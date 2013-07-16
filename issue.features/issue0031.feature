@@ -16,6 +16,7 @@ Feature: Issue #31 "behave --format help" raises an error
         pretty         Standard colourised pretty formatter
         progress       Shows dotted progress for each executed scenario.
         progress2      Shows dotted progress for each executed step.
+        progress3      Shows detailed progress for each step of a scenario.
         rerun          Emits scenario file locations of failing scenarios
         sphinx.steps   Generate sphinx-based documentation for step definitions.
         steps          Shows step definitions (step implementations).
