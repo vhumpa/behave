@@ -13,6 +13,6 @@ script:
   - COVERAGE_FILE=.coverage.features coverage run bin/behave -f progress --junit --tags=~@xfail features/
   - COVERAGE_FILE=.coverage.tools coverage run bin/behave -f progress --junit --tags=~@xfail tools/test-features/
   - COVERAGE_FILE=.coverage.issues coverage run bin/behave -f progress --junit --tags=~@xfail issue.features/
-after_success:
   - coverage combine
+after_success:
   - coveralls
