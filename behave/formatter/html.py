@@ -334,7 +334,8 @@ class HTMLFormatter(Formatter):
             for argument in self.arguments:
                 step_part = ET.SubElement(step_text, 'span')
                 step_part.text = result.name[text_start:argument.start]
-                ET.SubElement(step_text, 'b').text = argument.value
+                ET.SubElement(step_text, 'b').text = str(argument.value) if type(argument.value) is int \
+                                                                         else argument.value
                 text_start = argument.end
             step_part = ET.SubElement(step_text, 'span')
             step_part.text = result.name[self.arguments[-1].end:]
